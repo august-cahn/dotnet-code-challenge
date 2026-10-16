@@ -1,0 +1,20 @@
+## Build output
+bin/
+obj/
+artifacts/
+publish/
+
+## Test output
+TestResults/
+*.coverage
+*.coveragexml
+
+## IDE-generated files
+.vs/
+*.user
+*.suo
+*.sln.docstates
+
+## NuGet packages
+*.nupkg
+*.snupkg
