@@ -90,5 +90,19 @@ Create a new type, Compensation. A Compensation has the following fields: employ
 two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
 Compensation from the persistence layer.
 
+#### Compensation Endpoints
+
+* CREATE
+  * HTTP Method: POST
+  * URL: `localhost:8080/api/compensation`
+  * PAYLOAD: `Compensation` with an existing employee, a positive salary, and an effective date
+  * RESPONSE: Created `Compensation`
+  * STATUS: `201 Created`; `400 Bad Request` for invalid data; `404 Not Found` when the employee does not exist; `409 Conflict` if that employee already has compensation
+* READ
+  * HTTP Method: GET
+  * URL: `localhost:8080/api/compensation/{employeeId}`
+  * RESPONSE: Persisted `Compensation` with its employee, salary, and effective date
+  * STATUS: `200 OK`; `404 Not Found` when the employee has no compensation
+
 ## Delivery
 Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.
