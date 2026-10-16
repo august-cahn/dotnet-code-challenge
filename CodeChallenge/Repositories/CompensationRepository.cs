@@ -17,6 +17,7 @@ namespace CodeChallenge.Repositories
 
         public Compensation GetByEmployeeId(string employeeId)
         {
+            // Include the related employee so reads return the complete compensation response.
             return _employeeContext.Compensations
                 .Include(compensation => compensation.Employee)
                 .SingleOrDefault(compensation => compensation.EmployeeId == employeeId);

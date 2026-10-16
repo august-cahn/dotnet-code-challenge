@@ -45,6 +45,7 @@ namespace CodeChallenge.Controllers
             return Ok(employee);
         }
 
+        // The report count is calculated for this response and is not stored.
         [HttpGet("{id}/reporting-structure")]
         public IActionResult GetReportingStructureById(String id)
         {

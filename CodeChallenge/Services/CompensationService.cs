@@ -14,6 +14,7 @@ namespace CodeChallenge.Services
 
         public Compensation Create(Compensation compensation, Employee employee)
         {
+            // EmployeeId is the key, so reject a second compensation for the same employee.
             if (compensation == null || employee == null ||
                 _compensationRepository.GetByEmployeeId(employee.EmployeeId) != null)
             {

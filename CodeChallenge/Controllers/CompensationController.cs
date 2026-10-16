@@ -33,6 +33,7 @@ namespace CodeChallenge.Controllers
                 return BadRequest();
             }
 
+            // Resolve the submitted ID to a stored employee instead of trusting client-supplied employee data.
             var employee = _employeeService.GetById(employeeId);
             if (employee == null)
             {

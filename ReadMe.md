@@ -98,11 +98,38 @@ Compensation from the persistence layer.
   * PAYLOAD: `Compensation` with an existing employee, a positive salary, and an effective date
   * RESPONSE: Created `Compensation`
   * STATUS: `201 Created`; `400 Bad Request` for invalid data; `404 Not Found` when the employee does not exist; `409 Conflict` if that employee already has compensation
+
+Example request:
+```json
+{
+  "employee": {
+    "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f"
+  },
+  "salary": 125000.50,
+  "effectiveDate": "2026-10-16T00:00:00Z"
+}
+```
+
 * READ
   * HTTP Method: GET
   * URL: `localhost:8080/api/compensation/{employeeId}`
   * RESPONSE: Persisted `Compensation` with its employee, salary, and effective date
   * STATUS: `200 OK`; `404 Not Found` when the employee has no compensation
+
+Example response:
+```json
+{
+  "employee": {
+    "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
+    "firstName": "John",
+    "lastName": "Lennon",
+    "position": "Development Manager",
+    "department": "Engineering"
+  },
+  "salary": 125000.50,
+  "effectiveDate": "2026-10-16T00:00:00Z"
+}
+```
 
 ## Delivery
 Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.

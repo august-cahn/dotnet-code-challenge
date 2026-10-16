@@ -12,6 +12,7 @@ namespace CodeChallenge.Models
         [Required]
         public Employee Employee { get; set; }
 
+        // Keying the record by employee ID enforces one compensation per employee.
         [Key]
         [JsonIgnore]
         public string EmployeeId { get; set; }

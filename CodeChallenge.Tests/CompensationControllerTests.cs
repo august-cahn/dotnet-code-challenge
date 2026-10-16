@@ -153,6 +153,7 @@ namespace CodeCodeChallenge.Tests.Integration
 
         private static Employee CreateEmployee()
         {
+            // Each test uses a fresh employee so shared in-memory state cannot affect other cases.
             var employee = new Employee
             {
                 FirstName = "Compensation",

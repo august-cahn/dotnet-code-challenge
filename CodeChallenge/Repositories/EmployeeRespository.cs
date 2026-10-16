@@ -34,6 +34,7 @@ namespace CodeChallenge.Repositories
 
         public IEnumerable<Employee> GetAll()
         {
+            // Loading the full tracked set lets EF fix up each employee's DirectReports navigation.
             return _employeeContext.Employees.ToList();
         }
 
