@@ -132,8 +132,10 @@ namespace CodeCodeChallenge.Tests.Integration
             };
 
             var response = PostCompensation(compensation);
+            var getResponse = _httpClient.GetAsync($"api/compensation/{employee.EmployeeId}").Result;
 
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
         }
 
         [TestMethod]
@@ -147,8 +149,10 @@ namespace CodeCodeChallenge.Tests.Integration
             };
 
             var response = PostCompensation(compensation);
+            var getResponse = _httpClient.GetAsync($"api/compensation/{employee.EmployeeId}").Result;
 
             Assert.AreEqual(HttpStatusCode.BadRequest, response.StatusCode);
+            Assert.AreEqual(HttpStatusCode.NotFound, getResponse.StatusCode);
         }
 
         private static Employee CreateEmployee()
