@@ -32,6 +32,12 @@ namespace CodeChallenge.Repositories
             return _employeeContext.Employees.SingleOrDefault(e => e.EmployeeId == id);
         }
 
+        public IEnumerable<Employee> GetAll()
+        {
+            // Loading the full tracked set lets EF fix up each employee's DirectReports navigation.
+            return _employeeContext.Employees.ToList();
+        }
+
         public Task SaveAsync()
         {
             return _employeeContext.SaveChangesAsync();

@@ -35,21 +35,29 @@ Complete both tasks in the repository's .NET 6 employee API and verify and docum
 
 ## 3. Verification and Documentation (about 20 minutes)
 
-- Run `dotnet test CodeChallenge.sln` and resolve failures related to the implementation.
-- Start the application and smoke-test both tasks' endpoints using the seeded data and a compensation create/read request.
-- Add concise code documentation for the report-counting approach and compensation persistence decisions. Update the README with both new endpoints, request payloads, and representative responses/status codes.
-- Review the final diff and confirm generated .NET output remains ignored by Git.
+- [x] Run `dotnet test CodeChallenge.sln` and resolve failures related to the implementation.
+- [x] Start the application and smoke-test both tasks' endpoints using the seeded data and a compensation create/read request.
+- [x] Add concise code documentation for the report-counting approach and compensation persistence decisions. Update the README with both new endpoints, request payloads, and representative responses/status codes.
+- [x] Review the final diff and confirm generated .NET output remains ignored by Git.
+
+### Verification Record (2026-10-16)
+
+- `dotnet test CodeChallenge.sln`: 15 passed, 0 failed.
+- Live HTTP smoke checks: compensation POST returned `201 Created`; GET returned the saved salary and employee; John Lennon's ReportingStructure returned 4 reports.
+- `git diff --check` and editor diagnostics passed. `bin/` and `obj/` outputs match ignore rules; seed data and app settings remain trackable.
+- The build emits `NETSDK1138` because the project targets out-of-support .NET 6.
 
 ## 4. Transcript and Final Review (about 10 minutes)
 
-- Download the AI conversation transcript at the end of the work and include it with the submission as the record of AI usage. No separate in-repository activity log is needed.
-- Check that the implementation, documentation, tests, and transcript are ready for submission. Public GitHub setup and publication are already handled.
+- [ ] Download the AI conversation transcript at the end of the work and include it with the submission as the record of AI usage. No separate in-repository activity log is needed.
+- [x] Review the implementation, documentation, tests, and repository status for submission readiness. Public GitHub setup and publication are already handled.
 
 ## Completion Checklist
 
-- [ ] ReportingStructure endpoint returns the employee and correct recursive report count.
-- [ ] Compensation create/read endpoints persist and return the requested data.
-- [ ] Integration tests cover success, empty/invalid cases, and not-found behavior.
-- [ ] `dotnet test CodeChallenge.sln` and endpoint smoke checks pass.
-- [ ] Code and API documentation are updated; the AI conversation transcript is ready for submission.
-- [ ] Generated files are ignored and the completed work is ready for review.
+- [x] ReportingStructure endpoint returns the employee and correct recursive report count.
+- [x] Compensation create/read endpoints persist and return the requested data.
+- [x] Integration tests cover success, empty/invalid cases, and not-found behavior.
+- [x] `dotnet test CodeChallenge.sln` and endpoint smoke checks pass.
+- [x] Code and API documentation are updated.
+- [ ] Download and include the AI conversation transcript for submission.
+- [x] Generated files are ignored and the completed work is ready for review.

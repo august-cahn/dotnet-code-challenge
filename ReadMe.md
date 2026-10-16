@@ -78,10 +78,58 @@ This new type should have a new REST endpoint created for it. This new endpoint 
 the fully filled out ReportingStructure for the specified employeeId. The values should be computed on the fly and will 
 not be persisted.
 
+#### ReportingStructure Endpoint
+
+* HTTP Method: GET
+* URL: `localhost:8080/api/employee/{employeeId}/reporting-structure`
+* RESPONSE: `ReportingStructure`, containing the requested `employee` and `numberOfReports` (the total number of direct and indirect reports)
+* STATUS: `200 OK` when the employee exists; `404 Not Found` when the employeeId is unknown
+
 ### Task 2
 Create a new type, Compensation. A Compensation has the following fields: employee, salary, and effectiveDate. Create 
 two new Compensation REST endpoints. One to create and one to read by employeeId. These should persist and query the 
 Compensation from the persistence layer.
+
+#### Compensation Endpoints
+
+* CREATE
+  * HTTP Method: POST
+  * URL: `localhost:8080/api/compensation`
+  * PAYLOAD: `Compensation` with an existing employee, a positive salary, and an effective date
+  * RESPONSE: Created `Compensation`
+  * STATUS: `201 Created`; `400 Bad Request` for invalid data; `404 Not Found` when the employee does not exist; `409 Conflict` if that employee already has compensation
+
+Example request:
+```json
+{
+  "employee": {
+    "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f"
+  },
+  "salary": 125000.50,
+  "effectiveDate": "2026-10-16T00:00:00Z"
+}
+```
+
+* READ
+  * HTTP Method: GET
+  * URL: `localhost:8080/api/compensation/{employeeId}`
+  * RESPONSE: Persisted `Compensation` with its employee, salary, and effective date
+  * STATUS: `200 OK`; `404 Not Found` when the employee has no compensation
+
+Example response:
+```json
+{
+  "employee": {
+    "employeeId": "16a596ae-edd3-4847-99fe-c4518e82c86f",
+    "firstName": "John",
+    "lastName": "Lennon",
+    "position": "Development Manager",
+    "department": "Engineering"
+  },
+  "salary": 125000.50,
+  "effectiveDate": "2026-10-16T00:00:00Z"
+}
+```
 
 ## Delivery
 Please upload your results to a publicly accessible Git repo. Free ones are provided by Github and Bitbucket.

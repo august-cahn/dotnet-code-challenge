@@ -40,6 +40,68 @@ namespace CodeChallenge.Services
             return null;
         }
 
+        public ReportingStructure GetReportingStructure(string id)
+        {
+            if (String.IsNullOrEmpty(id))
+            {
+                return null;
+            }
+
+            var employee = _employeeRepository.GetAll().SingleOrDefault(item => item.EmployeeId == id);
+            if (employee == null)
+            {
+                return null;
+            }
+
+            return new ReportingStructure
+            {
+                Employee = employee,
+                NumberOfReports = CountReports(employee)
+            };
+        }
+
+        // An iterative traversal avoids recursion limits and counts each employee ID once.
+        private static int CountReports(Employee employee)
+        {
+            var visitedEmployeeIds = new HashSet<string>(StringComparer.Ordinal);
+            if (!String.IsNullOrEmpty(employee.EmployeeId))
+            {
+                visitedEmployeeIds.Add(employee.EmployeeId);
+            }
+
+            var employeesToVisit = new Stack<Employee>();
+            if (employee.DirectReports != null)
+            {
+                foreach (var directReport in employee.DirectReports)
+                {
+                    employeesToVisit.Push(directReport);
+                }
+            }
+
+            var numberOfReports = 0;
+            while (employeesToVisit.Count > 0)
+            {
+                var report = employeesToVisit.Pop();
+                if (report == null || String.IsNullOrEmpty(report.EmployeeId) || !visitedEmployeeIds.Add(report.EmployeeId))
+                {
+                    continue;
+                }
+
+                numberOfReports++;
+                if (report.DirectReports == null)
+                {
+                    continue;
+                }
+
+                foreach (var directReport in report.DirectReports)
+                {
+                    employeesToVisit.Push(directReport);
+                }
+            }
+
+            return numberOfReports;
+        }
+
         public Employee Replace(Employee originalEmployee, Employee newEmployee)
         {
             if(originalEmployee != null)

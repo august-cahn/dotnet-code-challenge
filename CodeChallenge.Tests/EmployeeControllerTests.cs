@@ -83,18 +83,52 @@ namespace CodeCodeChallenge.Tests.Integration
             Assert.AreEqual(expectedLastName, employee.LastName);
         }
 
+        [DataTestMethod]
+        [DataRow("16a596ae-edd3-4847-99fe-c4518e82c86f", "John", 4)]
+        [DataRow("03aa1462-ffa9-4978-901b-7c001562cf6f", "Ringo", 2)]
+        [DataRow("b7839309-3348-463b-a7e3-5de1c168beb3", "Paul", 0)]
+        public void GetReportingStructureById_Returns_CorrectReportCount(string employeeId, string expectedFirstName, int expectedNumberOfReports)
+        {
+            // Execute
+            var response = _httpClient.GetAsync($"api/employee/{employeeId}/reporting-structure").Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.OK, response.StatusCode);
+            var reportingStructure = response.DeserializeContent<ReportingStructure>();
+            Assert.IsNotNull(reportingStructure.Employee);
+            Assert.AreEqual(employeeId, reportingStructure.Employee.EmployeeId);
+            Assert.AreEqual(expectedFirstName, reportingStructure.Employee.FirstName);
+            Assert.AreEqual(expectedNumberOfReports, reportingStructure.NumberOfReports);
+        }
+
+        [TestMethod]
+        public void GetReportingStructureById_Returns_NotFound()
+        {
+            // Execute
+            var response = _httpClient.GetAsync("api/employee/Invalid_Id/reporting-structure").Result;
+
+            // Assert
+            Assert.AreEqual(HttpStatusCode.NotFound, response.StatusCode);
+        }
+
         [TestMethod]
         public void UpdateEmployee_Returns_Ok()
         {
             // Arrange
             var employee = new Employee()
             {
-                EmployeeId = "03aa1462-ffa9-4978-901b-7c001562cf6f",
                 Department = "Engineering",
                 FirstName = "Pete",
                 LastName = "Best",
                 Position = "Developer VI",
             };
+
+            var createRequestContent = new JsonSerialization().ToJson(employee);
+            var createResponse = _httpClient.PostAsync("api/employee",
+                new StringContent(createRequestContent, Encoding.UTF8, "application/json")).Result;
+            Assert.AreEqual(HttpStatusCode.Created, createResponse.StatusCode);
+            employee.EmployeeId = createResponse.DeserializeContent<Employee>().EmployeeId;
+
             var requestContent = new JsonSerialization().ToJson(employee);
 
             // Execute
